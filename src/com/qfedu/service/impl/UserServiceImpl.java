@@ -13,27 +13,27 @@ import com.qfedu.service.UserService;
  *
  */
 public class UserServiceImpl implements UserService {
-    private UserDao userDao = new UserDaoImpl();
+	private UserDao userDao = new UserDaoImpl();
+	
+	@Override
+	public boolean login(String username, String password) {
+		User temp = userDao.findByUsername(username);
+		if (temp != null) {
+			String md5 = DigestUtils.md5Hex(password);
+			return temp.getPassword().equals(md5);
+		}
+		return false;
+	}
 
-    @Override
-    public boolean login(String username, String password) {
-        User temp = userDao.findByUsername(username);
-        if (temp != null) {
-            String md5 = DigestUtils.md5Hex(password);
-            return temp.getPassword().equals(md5);
-        }
-        return false;
-    }
-
-    @Override
-    public boolean register(User user) {
-        User temp = userDao.findByUsername(user.getUsername());
-        if (temp == null) {
-            String md5 = DigestUtils.md5Hex(user.getPassword());
-            user.setPassword(md5);
-            return userDao.save(user);
-        }
-        return false;
-    }
+	@Override
+	public boolean register(User user) {
+		User temp = userDao.findByUsername(user.getUsername());
+		if (temp == null) {
+			String md5 = DigestUtils.md5Hex(user.getPassword());
+			user.setPassword(md5);
+			return userDao.save(user);
+		}
+		return false;
+	}
 
 }
