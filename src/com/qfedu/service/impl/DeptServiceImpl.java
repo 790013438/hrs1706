@@ -28,4 +28,9 @@ public class DeptServiceImpl implements DeptService {
 		return false;
 	}
 
+	@Override
+	public boolean addNewDept(Dept dept) {
+		return deptDao.save(dept);
+	}
+
 }

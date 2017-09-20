@@ -4,17 +4,13 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.qfedu.domain.User;
-import com.qfedu.service.UserService;
-import com.qfedu.service.impl.UserServiceImpl;
 
 @WebServlet(urlPatterns = "/reg", loadOnStartup = 1)
-public class RegServlet extends HttpServlet {
-	private UserService userService = new UserServiceImpl();
+public class RegServlet extends BaseServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,7 +22,7 @@ public class RegServlet extends HttpServlet {
 			user.setUsername(username);
 			user.setPassword(password);
 			user.setEmail(email);
-			if (userService.register(user)) {
+			if (getUserService().register(user)) {
 				resp.sendRedirect("login.jsp");
 			} else {
 				req.setAttribute("hint", "×¢²áÊ§°Ü! Çë³¢ÊÔ¸ü»»ÓÃ»§Ãû!");
@@ -37,4 +33,5 @@ public class RegServlet extends HttpServlet {
 			req.getRequestDispatcher("register.jsp").forward(req, resp);
 		}
 	}
+
 }
