@@ -37,7 +37,11 @@ public class Emp implements Serializable {
 		this.name = name;
 	}
 
-	public String getSex() {
+	public Boolean getSex() {
+		return sex;
+	}
+	
+	public String getSexStr() {
 		return sex ? "ÄÐ" : "Å®";
 	}
 

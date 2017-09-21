@@ -20,7 +20,8 @@ public class AuthenticationFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		String servletPath = request.getServletPath();
 		if (servletPath.equals("/dept") || servletPath.equals("/delDept") ||
-				servletPath.equals("/addDept")) {
+				servletPath.equals("/addDept") || servletPath.equals("/emp") || 
+				servletPath.equals("/addEmp")) {
 			if (request.getSession().getAttribute("username") != null) {
 				chain.doFilter(req, resp);
 			} else {
