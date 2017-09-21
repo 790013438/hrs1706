@@ -3,6 +3,7 @@ package com.qfedu.controller;
 import javax.servlet.http.HttpServlet;
 
 import com.qfedu.service.DeptService;
+import com.qfedu.service.EmpService;
 import com.qfedu.service.UserService;
 import com.qfedu.service.impl.ServiceFactory;
 
@@ -25,5 +26,12 @@ public abstract class BaseServlet extends HttpServlet {
 	 */
 	protected DeptService getDeptService() {
 		return ServiceFactory.create(DeptService.class);
+	}
+	
+	/**
+	 * 获取员工业务对象 
+	 */
+	protected EmpService getEmpService() {
+		return ServiceFactory.create(EmpService.class);
 	}
 }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.qfedu.service.DeptService;
+import com.qfedu.service.EmpService;
 import com.qfedu.service.UserService;
 
 /**
@@ -17,6 +18,7 @@ public final class ServiceFactory {
 	static {
 		map.put(UserService.class, new UserServiceImpl());
 		map.put(DeptService.class, new DeptServiceImpl());
+		map.put(EmpService.class, new EmpServiceImpl());
 	}
 
 	private ServiceFactory() {
