@@ -1,5 +1,6 @@
 package com.qfedu.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
@@ -16,8 +17,10 @@ import com.qfedu.util.CommonUtil;
 
 @WebServlet(urlPatterns = "/addEmp", loadOnStartup = 1)
 @MultipartConfig(maxFileSize = 10 * 1024 * 1024)
-public class AddEmpServlet extends BaseServlet {
-	
+public class AddEmpServlet extends BaseServlet {	
+	private static final int DEFAULT_IMAGE_WIDTH = 200;
+	private static final int DEFAULT_IMAGE_HEIGHT = 150;
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int no = Integer.parseInt(req.getParameter("no"));
@@ -42,11 +45,11 @@ public class AddEmpServlet extends BaseServlet {
 		emp.setMgr(mgr);
 		Part part = req.getPart("photo");
 		if (part.getSize() > 0) {
-			String originalName = part.getSubmittedFileName();
-			String newFilename = CommonUtil.getUniqueFilename() +
-					CommonUtil.getFilenameSuffix(originalName);
+			String newFilename = CommonUtil.getUniqueFilename() + ".png";
 			String path = req.getServletContext().getRealPath("/images");
-			part.write(path + "/" + newFilename);
+			File file = new File(path + "/" + newFilename);
+			CommonUtil.compressImage(part.getInputStream(), file, 
+					DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT);
 			emp.setPhoto(newFilename);
 		}
 		int deptNo = Integer.parseInt(req.getParameter("dno"));

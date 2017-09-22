@@ -1,8 +1,7 @@
 package com.qfedu.service;
 
-import java.util.List;
-
 import com.qfedu.domain.Emp;
+import com.qfedu.util.PageBean;
 
 /**
  * 员工相关业务接口
@@ -23,5 +22,5 @@ public interface EmpService {
 	 * @param no 部门编号
 	 * @return 保存员工对象的列表容器
 	 */
-	List<Emp> listAllEmpsByDeptNo(Integer no);
+	PageBean<Emp> listAllEmpsByDeptNo(Integer no, int page, int size);
 }

@@ -1,11 +1,10 @@
 package com.qfedu.service.impl;
 
-import java.util.List;
-
 import com.qfedu.domain.Emp;
 import com.qfedu.persistence.EmpDao;
 import com.qfedu.persistence.impl.EmpDaoImpl;
 import com.qfedu.service.EmpService;
+import com.qfedu.util.PageBean;
 
 /**
  * 员工相关业务实现类
@@ -21,8 +20,8 @@ public class EmpServiceImpl implements EmpService {
 	}
 	
 	@Override
-	public List<Emp> listAllEmpsByDeptNo(Integer no) {
-		return empDao.findEmpsByDeptNo(no);
+	public PageBean<Emp> listAllEmpsByDeptNo(Integer no, int page, int size) {
+		return empDao.findEmpsByDeptNo(no, page, size);
 	}
 
 }
