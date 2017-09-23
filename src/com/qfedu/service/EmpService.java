@@ -1,6 +1,7 @@
 package com.qfedu.service;
 
 import com.qfedu.domain.Emp;
+import com.qfedu.dto.EmpDto;
 import com.qfedu.util.PageBean;
 
 /**
@@ -22,5 +23,5 @@ public interface EmpService {
 	 * @param no 部门编号
 	 * @return 保存员工对象的列表容器
 	 */
-	PageBean<Emp> listAllEmpsByDeptNo(Integer no, int page, int size);
+	PageBean<EmpDto> listAllEmpsByDeptNo(Integer no, int page, int size);
 }

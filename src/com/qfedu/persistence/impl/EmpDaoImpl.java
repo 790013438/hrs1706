@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.qfedu.domain.Emp;
+import com.qfedu.dto.EmpDto;
 import com.qfedu.persistence.EmpDao;
 import com.qfedu.util.DbException;
 import com.qfedu.util.DbResourceManager;
@@ -22,21 +24,21 @@ public class EmpDaoImpl implements EmpDao {
 			"insert into tb_emp values (?,?,?,?,?,?,?,?,?,?,?)";
 
 	@Override
-	public PageBean<Emp> findEmpsByDeptNo(Integer no, int page, int size) {
+	public PageBean<EmpDto> findEmpsByDeptNo(Integer no, int page, int size) {
 		Connection connection = DbResourceManager.openConnection();
 		ResultSet rs = DbResourceManager.executeQuery(connection, 
 				SELECT_EMP_BY_DEPT_SQL, no, (page - 1) * size, size);
 		ResultSet rs2 = DbResourceManager.executeQuery(connection, 
 				SELECT_EMP_COUNT_SQL, no);
-		List<Emp> empList = new ArrayList<>();
+		List<EmpDto> empList = new ArrayList<>();
 		try {
 			while (rs.next()) {
-				Emp emp = new Emp();
+				EmpDto emp = new EmpDto();
 				emp.setNo(rs.getInt("eno"));
 				emp.setName(rs.getString("ename"));
-				emp.setSex(rs.getBoolean("esex"));
+				emp.setSex(rs.getBoolean("esex") ? "男" : "女");
 				emp.setJob(rs.getString("ejob"));
-				emp.setStatus(rs.getBoolean("estatus"));
+				emp.setStatus(rs.getBoolean("estatus") ? "在职" : "离职");
 				emp.setTel(rs.getString("etel"));
 				empList.add(emp);
 			}
@@ -50,8 +52,11 @@ public class EmpDaoImpl implements EmpDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DbException(DbException.RS_EX, e);
+		} finally {
+			DbResourceManager.closeConnection(connection);
 		}
 		int totalPage = (total - 1) / size + 1;
+		empList = empList.size() > 0 ? empList : Collections.emptyList();
 		return new PageBean<>(empList, totalPage, page, size);
 	}
 
@@ -71,19 +76,16 @@ public class EmpDaoImpl implements EmpDao {
 
 	@Override
 	public boolean deleteByNo(Integer no) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean update(Emp emp) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public Emp findByNo(Integer no) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

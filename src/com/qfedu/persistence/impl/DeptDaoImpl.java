@@ -61,6 +61,7 @@ public class DeptDaoImpl implements DeptDao {
 	public List<Dept> findAll() {
 		List<Dept> deptList = new ArrayList<>();
 		Connection connection = DbResourceManager.openConnection();
+		System.out.println(connection.getClass());
 		ResultSet rs = DbResourceManager.executeQuery(connection, SELECT_ALL_DEPT_SQL);
 		try {
 			while (rs.next()) {

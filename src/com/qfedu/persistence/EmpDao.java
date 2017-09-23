@@ -1,6 +1,7 @@
 package com.qfedu.persistence;
 
 import com.qfedu.domain.Emp;
+import com.qfedu.dto.EmpDto;
 import com.qfedu.util.PageBean;
 
 /**
@@ -13,9 +14,11 @@ public interface EmpDao {
 	/**
 	 * 根据部门编号查找该部门所有员工
 	 * @param no 部门编号
-	 * @return 保存员工对象的列表容器
+	 * @param page 页码
+	 * @param size 页面大小
+	 * @return 分页器对象
 	 */
-	PageBean<Emp> findEmpsByDeptNo(Integer no, int page, int size);
+	PageBean<EmpDto> findEmpsByDeptNo(Integer no, int page, int size);
 	
 	/**
 	 * 保存员工
