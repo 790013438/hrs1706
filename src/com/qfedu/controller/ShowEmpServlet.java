@@ -1,6 +1,7 @@
 package com.qfedu.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,10 +38,19 @@ public class ShowEmpServlet extends BaseServlet {
 			}
 			int size = DEFAULT_SIZE;
 			PageBean<EmpDto> pageBean = getEmpService().listAllEmpsByDeptNo(dept.getNo(), page, size);
-			req.setAttribute("empList", pageBean.getDataModel());
-			req.setAttribute("totalPage", pageBean.getTotalPage());
-			req.setAttribute("currentPage", pageBean.getCurrentPage());
-			req.getRequestDispatcher("emp.jsp").forward(req, resp);
+//			req.setAttribute("empList", pageBean.getDataModel());
+//			req.setAttribute("totalPage", pageBean.getTotalPage());
+//			req.setAttribute("currentPage", pageBean.getCurrentPage());
+//			req.getRequestDispatcher("emp.jsp").forward(req, resp);
+			// 1. 将对象转换成JSON格式的字符串返回给浏览器
+			// { 'empList': [{'no': 1122, 'name': '骆昊',  ...}, {}, ...], 'totalPage': 4, 'currentPage': 2, 'pageSize': 5 }
+			// Gson / Fastjson
+			String jsonStr = "";
+			// 2. 把JSON字符串输出到浏览器通过MIME类型告诉浏览器这里是JSON格式
+			resp.setContentType("application/json;charset=utf-8");
+			PrintWriter pw = resp.getWriter();
+			pw.write(jsonStr);
+			pw.close();
 		}
 	}
 }
