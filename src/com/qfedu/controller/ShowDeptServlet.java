@@ -12,6 +12,7 @@ public class ShowDeptServlet extends BaseServlet {
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getSession().removeAttribute("dept");
 		req.setAttribute("deptList", getDeptService().listAllDepts());
 		req.getRequestDispatcher("dept.jsp").forward(req, resp);
 	}

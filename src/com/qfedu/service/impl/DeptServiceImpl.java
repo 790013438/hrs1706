@@ -33,4 +33,9 @@ public class DeptServiceImpl implements DeptService {
 		return deptDao.save(dept);
 	}
 
+	@Override
+	public Dept getDeptByNo(Integer no) {
+		return deptDao.findById(no);
+	}
+
 }

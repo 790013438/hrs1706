@@ -19,6 +19,7 @@ import com.qfedu.util.DbResourceManager;
  */
 public class DeptDaoImpl implements DeptDao {
 
+	private static final String SELECT_DEPT_SQL = "select dname, dloc from tb_dept where dno=?";
 	private static final String SELECT_ALL_DEPT_SQL = "select dno, dname, dloc from tb_dept";
 	private static final String INSERT_DEPT_SQL = "insert into tb_dept values (?,?,?)";
 	private static final String DELETE_DEPT_SQL = "delete from tb_dept where dno=?";
@@ -88,6 +89,26 @@ public class DeptDaoImpl implements DeptDao {
 			return rs.next() ? rs.getInt(1) : 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(DbException.RS_EX, e);
+		} finally {
+			DbResourceManager.closeConnection(connection);
+		}
+	}
+
+	@Override
+	public Dept findById(Integer no) {
+		Connection connection = DbResourceManager.openConnection();
+		ResultSet rs = DbResourceManager.executeQuery(connection, SELECT_DEPT_SQL, no);
+		try {
+			Dept dept = null;
+			if (rs.next()) {
+				dept = new Dept();
+				dept.setNo(no);
+				dept.setName(rs.getString("dname"));
+				dept.setLocation(rs.getString("dloc"));
+			}
+			return dept;
+		} catch (SQLException e) {
 			throw new DbException(DbException.RS_EX, e);
 		} finally {
 			DbResourceManager.closeConnection(connection);

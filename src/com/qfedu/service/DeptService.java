@@ -24,6 +24,11 @@ public interface DeptService {
 	 * @return 删除成功返回true否则返回false
 	 */
 	boolean removeDeptByNo(Integer no);
+	
+	/**
+	 * 根据部门获取部门信息
+	 */
+	Dept getDeptByNo(Integer no);
 
 	/**
 	 * 列出所有部门

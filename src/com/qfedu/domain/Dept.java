@@ -35,5 +35,13 @@ public class Dept implements Serializable {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+	
+//	public String getNameUrl() {
+//		try {
+//			return URLEncoder.encode(name, "utf-8");
+//		} catch (UnsupportedEncodingException e) {
+//			throw new RuntimeException(e);
+//		}
+//	}
 
 }
