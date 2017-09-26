@@ -24,4 +24,11 @@ public interface EmpService {
 	 * @return 保存员工对象的列表容器
 	 */
 	PageBean<EmpDto> listAllEmpsByDeptNo(Integer no, int page, int size);
+
+	/**
+	 * 根据员工编号查询员工
+	 * @param no 员工编号
+	 * @return 员工对象或null
+	 */
+	Emp getEmpByNo(int no);
 }

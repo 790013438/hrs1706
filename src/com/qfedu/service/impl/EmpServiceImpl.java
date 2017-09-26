@@ -25,4 +25,9 @@ public class EmpServiceImpl implements EmpService {
 		return empDao.findEmpsByDeptNo(no, page, size);
 	}
 
+	@Override
+	public Emp getEmpByNo(int no) {
+		return empDao.findByNo(no);
+	}
+
 }

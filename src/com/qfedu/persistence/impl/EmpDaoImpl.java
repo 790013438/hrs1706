@@ -22,6 +22,8 @@ public class EmpDaoImpl implements EmpDao {
 			"select count(eno) from tb_emp where dno=?";
 	private static final String INSERT_EMP_SQL =
 			"insert into tb_emp values (?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String SELECT_EMP_SQL = 
+			"select ephoto from tb_emp where eno=?";
 
 	@Override
 	public PageBean<EmpDto> findEmpsByDeptNo(Integer no, int page, int size) {
@@ -86,7 +88,20 @@ public class EmpDaoImpl implements EmpDao {
 
 	@Override
 	public Emp findByNo(Integer no) {
-		return null;
+		Connection connection = DbResourceManager.openConnection();
+		ResultSet rs = DbResourceManager.executeQuery(connection, SELECT_EMP_SQL, no);
+		try {
+			Emp emp = null;
+			if (rs.next()) {
+				emp = new Emp();
+				emp.setPhoto(rs.getString("ephoto"));
+			}
+			return emp;
+		} catch (SQLException e) {
+			throw new DbException(DbException.RS_EX, e);
+		} finally {
+			DbResourceManager.closeConnection(connection);
+		}
 	}
 
 }
