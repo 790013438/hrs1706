@@ -9,22 +9,23 @@ import com.qfedu.service.UserService;
 
 /**
  * 创建业务对象的工厂类
+ * 
  * @author 骆昊
  *
  */
 public final class ServiceFactory {
 	private static Map<Class<?>, Object> map = new HashMap<>();
-	
+
 	static {
-		map.put(UserService.class, new UserServiceImpl());
-		map.put(DeptService.class, new DeptServiceImpl());
-		map.put(EmpService.class, new EmpServiceImpl());
+		map.put(UserService.class, ServiceProxy.createProxy(new UserServiceImpl()));
+		map.put(DeptService.class, ServiceProxy.createProxy(new DeptServiceImpl()));
+		map.put(EmpService.class, ServiceProxy.createProxy(new EmpServiceImpl()));
 	}
 
 	private ServiceFactory() {
 		throw new AssertionError();
 	}
-	
+
 	/**
 	 * 创建业务对象的工厂方法
 	 * @param type 业务对象的类型

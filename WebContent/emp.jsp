@@ -26,7 +26,8 @@
 				</table>
 				<div align="center">
 					<a id="first">首页</a>&nbsp;&nbsp;	
-					<a id="prev">上一页</a>&nbsp;&nbsp;
+					<a id="prev">上一页</a>&nbsp;
+					<span id="pageInfo"></span>
 					<a id="next">下一页</a>&nbsp;&nbsp;
 					<a id="last">末页</a>
 				</div>
@@ -46,6 +47,7 @@
 				var prevPage = json.currentPage - 1;
 				var nextPage = json.currentPage + 1;
 				var lastPage = json.totalPage;
+				$("#pageInfo").text(json.currentPage + " / " + json.totalPage);
 				if (json.currentPage > 1) {
 					$("#first").attr("href", "javascript:loadDataModel(1)");
 					$("#prev").attr("href", "javascript:loadDataModel(" + prevPage + ")");

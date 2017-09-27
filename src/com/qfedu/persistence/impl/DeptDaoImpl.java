@@ -1,6 +1,5 @@
 package com.qfedu.persistence.impl;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ import java.util.List;
 import com.qfedu.domain.Dept;
 import com.qfedu.persistence.DeptDao;
 import com.qfedu.util.DbException;
-import com.qfedu.util.DbResourceManager;
+import com.qfedu.util.DbSessionFactory;
 
 /**
  * 部门数据访问对象实现类
@@ -28,43 +27,30 @@ public class DeptDaoImpl implements DeptDao {
 	
 	@Override
 	public boolean save(Dept dept) {
-		Connection connection = DbResourceManager.openConnection();
-		try {
-			return DbResourceManager.executeUpdate(connection, INSERT_DEPT_SQL, 
-					dept.getNo(), dept.getName(), dept.getLocation()) == 1;
-		} finally {
-			DbResourceManager.closeConnection(connection);
-		}
+		return DbSessionFactory.getCurrentDbSession().executeUpdate(
+				INSERT_DEPT_SQL, 
+				dept.getNo(), dept.getName(), dept.getLocation()) == 1;
 	}
 
 	@Override
 	public boolean deleteByNo(Integer no) {
-		Connection connection = DbResourceManager.openConnection();
-		try {
-			return DbResourceManager.executeUpdate(connection, DELETE_DEPT_SQL, no) == 1;
-		} finally {
-			DbResourceManager.closeConnection(connection);
-		}
+		return DbSessionFactory.getCurrentDbSession().executeUpdate(
+				DELETE_DEPT_SQL, no) == 1;
 	}
 
 	@Override
 	public boolean update(Dept dept) {
-		Connection connection = DbResourceManager.openConnection();
-		try {
-			return DbResourceManager.executeUpdate(connection, UPDATE_DEPT_SQL, 
-					dept.getName(), dept.getLocation(), dept.getNo()) == 1;
-		} finally {
-			DbResourceManager.closeConnection(connection);
-		}
+		return DbSessionFactory.getCurrentDbSession().executeUpdate(
+				UPDATE_DEPT_SQL, 
+				dept.getName(), dept.getLocation(), dept.getNo()) == 1;
 	}
 
 	@Override
 	public List<Dept> findAll() {
-		List<Dept> deptList = new ArrayList<>();
-		Connection connection = DbResourceManager.openConnection();
-		System.out.println(connection.getClass());
-		ResultSet rs = DbResourceManager.executeQuery(connection, SELECT_ALL_DEPT_SQL);
+		ResultSet rs = DbSessionFactory.getCurrentDbSession().executeQuery(
+				SELECT_ALL_DEPT_SQL);
 		try {
+			List<Dept> deptList = new ArrayList<>();
 			while (rs.next()) {
 				Dept dept = new Dept();
 				dept.setNo(rs.getInt("dno"));
@@ -76,29 +62,25 @@ public class DeptDaoImpl implements DeptDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DbException(DbException.RS_EX, e);
-		} finally {
-			DbResourceManager.closeConnection(connection);
 		}
 	}
 
 	@Override
 	public int countEmpByNo(Integer no) {
-		Connection connection = DbResourceManager.openConnection();
-		ResultSet rs = DbResourceManager.executeQuery(connection, COUNT_EMP_SQL, no);
+		ResultSet rs = DbSessionFactory.getCurrentDbSession().executeQuery(
+				COUNT_EMP_SQL, no);
 		try {
 			return rs.next() ? rs.getInt(1) : 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DbException(DbException.RS_EX, e);
-		} finally {
-			DbResourceManager.closeConnection(connection);
 		}
 	}
 
 	@Override
 	public Dept findById(Integer no) {
-		Connection connection = DbResourceManager.openConnection();
-		ResultSet rs = DbResourceManager.executeQuery(connection, SELECT_DEPT_SQL, no);
+		ResultSet rs = DbSessionFactory.getCurrentDbSession().executeQuery(
+				SELECT_DEPT_SQL, no);
 		try {
 			Dept dept = null;
 			if (rs.next()) {
@@ -110,9 +92,6 @@ public class DeptDaoImpl implements DeptDao {
 			return dept;
 		} catch (SQLException e) {
 			throw new DbException(DbException.RS_EX, e);
-		} finally {
-			DbResourceManager.closeConnection(connection);
 		}
 	}
-
 }

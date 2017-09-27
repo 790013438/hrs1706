@@ -10,6 +10,7 @@ public class DbException extends RuntimeException {
 	public static final String EXEC_EX = "执行SQL语句时发生异常";
 	public static final String CONN_EX = "无法建立数据库连接";
 	public static final String DIS_EX = "无法关闭数据库连接";
+	public static final String TX_EX = "处理事务时发生异常";
 	
 	public DbException(String message, Throwable cause) {
 		super(message, cause);

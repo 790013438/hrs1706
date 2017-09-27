@@ -1,8 +1,6 @@
 package com.qfedu.util;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.naming.Context;
@@ -72,45 +70,6 @@ public final class DbResourceManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DbException(DbException.DIS_EX, e);
-		}
-	}
-	
-	/**
-	 * 执行增删改操作
-	 * @param con 连接对象
-	 * @param sql SQL语句
-	 * @param params 替换SQL语句中占位符的参数
-	 * @return 受影响的行数
-	 */
-	public static int executeUpdate(Connection con, String sql, Object... params) {
-		try (PreparedStatement stmt = con.prepareStatement(sql)) {
-			for (int i = 0; i < params.length; ++i) {
-				stmt.setObject(i + 1, params[i]);
-			}
-			return stmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DbException(DbException.EXEC_EX, e);
-		}
-	}
-	
-	/**
-	 * 执行查询操作
-	 * @param con 数据库连接对象
-	 * @param sql SQL语句
-	 * @param params 替换SQL语句中占位符的参数
-	 * @return 结果集对象 (游标)
-	 */
-	public static ResultSet executeQuery(Connection con, String sql, Object... params) {
-		try {
-			PreparedStatement stmt = con.prepareStatement(sql);
-			for (int i = 0; i < params.length; ++i) {
-				stmt.setObject(i + 1, params[i]);
-			}
-			return stmt.executeQuery();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DbException(DbException.EXEC_EX, e);
 		}
 	}
 }
