@@ -1,5 +1,9 @@
 package com.qfedu.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.qfedu.domain.Dept;
 import com.qfedu.domain.Emp;
 import com.qfedu.dto.EmpDto;
 import com.qfedu.persistence.EmpDao;
@@ -17,17 +21,23 @@ public class EmpServiceImpl implements EmpService {
 	
 	@Override
 	public boolean addNewEmp(Emp emp) {
-		return empDao.save(emp);
+		return empDao.save(emp) != null;
 	}
 	
 	@Override
-	public PageBean<EmpDto> listAllEmpsByDeptNo(Integer no, int page, int size) {
-		return empDao.findEmpsByDeptNo(no, page, size);
+	public PageBean<EmpDto> listAllEmpsByDept(Dept dept, int page, int size) {
+		PageBean<Emp> pageBean = empDao.findEmpsByDept(dept, page, size);
+		List<Emp> empList = pageBean.getDataModel();
+		List<EmpDto> empDtoList = new ArrayList<>();
+		for (Emp emp : empList) {
+			empDtoList.add(new EmpDto(emp));
+		}
+		return new PageBean<>(empDtoList, pageBean.getTotalPage(), pageBean.getCurrentPage(), pageBean.getPageSize());
 	}
 
 	@Override
 	public Emp getEmpByNo(int no) {
-		return empDao.findByNo(no);
+		return empDao.findById(no);
 	}
 
 }

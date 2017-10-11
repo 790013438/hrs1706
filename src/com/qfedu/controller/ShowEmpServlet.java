@@ -32,7 +32,7 @@ public class ShowEmpServlet extends BaseServlet {
 				}
 			}
 			int size = DEFAULT_SIZE;
-			PageBean<EmpDto> pageBean = getEmpService().listAllEmpsByDeptNo(dept.getNo(), page, size);
+			PageBean<EmpDto> pageBean = getEmpService().listAllEmpsByDept(dept, page, size);
 //			req.setAttribute("empList", pageBean.getDataModel());
 //			req.setAttribute("totalPage", pageBean.getTotalPage());
 //			req.setAttribute("currentPage", pageBean.getCurrentPage());

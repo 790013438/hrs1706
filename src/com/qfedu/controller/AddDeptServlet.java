@@ -13,7 +13,9 @@ import com.qfedu.domain.Dept;
 @WebServlet(urlPatterns = "/addDept", loadOnStartup = 1)
 public class AddDeptServlet extends BaseServlet {
 
-	@Override
+    private static final long serialVersionUID = 1L;
+
+    @Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String noString = req.getParameter("no");
 		String name = req.getParameter("name");
@@ -25,17 +27,17 @@ public class AddDeptServlet extends BaseServlet {
 			dept.setName(name);
 			dept.setLocation(location);
 			if (getDeptService().addNewDept(dept)) {
-				// Èç¹ûÌí¼Ó²¿ÃÅ³É¹¦ÔòÏÈË¢ÐÂ»º´æÊý¾ÝÔÙÖØ¶¨Ïòµ½²é¿´²¿ÃÅÒ³Ãæ
+				// ï¿½ï¿½ï¿½ï¿½ï¿½Ó²ï¿½ï¿½Å³É¹ï¿½ï¿½ï¿½ï¿½ï¿½Ë¢ï¿½Â»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¶ï¿½ï¿½òµ½²é¿´ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½
 				Map<Integer, Dept> map = (Map<Integer, Dept>) 
 						req.getServletContext().getAttribute("cache");
 				map.put(dept.getNo(), dept);
 				resp.sendRedirect("dept");
 			} else {
-				req.setAttribute("hint", "Ìí¼Ó²¿ÃÅÊ§°Ü!");
+				req.setAttribute("hint", "ï¿½ï¿½Ó²ï¿½ï¿½ï¿½Ê§ï¿½ï¿½!");
 				req.getRequestDispatcher("add_dept.jsp").forward(req, resp);
 			}
 		} else {
-			req.setAttribute("hint", "ÇëÊäÈëÍêÕûµÄ²¿ÃÅÐÅÏ¢");
+			req.setAttribute("hint", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢");
 			req.getRequestDispatcher("add_dept.jsp").forward(req, resp);
 		}
 	}

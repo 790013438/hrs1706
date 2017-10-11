@@ -2,12 +2,19 @@ package com.qfedu.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * 用户类
  * @author 骆昊
  *
  */
+@Entity
+@Table(name = "tb_user")
 public class User implements Serializable {
+	@Id
 	private String username;		// 用户名
 	private String password;			// 密码
 	private String email;				// 邮箱

@@ -8,7 +8,7 @@ public class Test01 {
 	public static void main(String[] args) {
 		LazyStudent student = new LazyStudent("Íõ´ó´¸");
 		Gunman gunman = new Gunman("Âæê»");
-		Gunman gunman2 = new Gunman("Äş¸ßÀÚ");
+		Gunman gunman2 = new Gunman("Äş·ÉÑï");
 		gunman.setTarget(student);
 		gunman2.setTarget(gunman);
 		gunman2.writeDownName();

@@ -4,9 +4,10 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-import com.qfedu.util.DbException;
-import com.qfedu.util.DbSession;
-import com.qfedu.util.DbSessionFactory;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+
+import com.qfedu.util.HibernateUtil;
 
 /**
  * 业务代理类
@@ -33,20 +34,17 @@ public class ServiceProxy implements InvocationHandler {
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) 
 			throws Throwable {
-		DbSession session = DbSessionFactory.getCurrentDbSession();
-		String methodName = method.getName();
-		boolean isTxNeeded = !methodName.startsWith("get") &&
-				!methodName.startsWith("list");
+		Session session = HibernateUtil.getSession();
 		try {
-			if (isTxNeeded) session.beginTx();
+			session.beginTransaction();
 			Object retVal = method.invoke(target, args);
-			if (isTxNeeded) session.commitTx();
+			session.getTransaction().commit();
 			return retVal;
-		} catch (DbException e) {
-			if (isTxNeeded) session.rollbackTx();
+		} catch (HibernateException e) {
+			session.getTransaction().rollback();
 			throw e;
 		} finally {
-			DbSessionFactory.closeCurrentDbSession();
+			session.close();
 		}
 	}
 

@@ -1,7 +1,7 @@
 package com.qfedu.persistence;
 
+import com.qfedu.domain.Dept;
 import com.qfedu.domain.Emp;
-import com.qfedu.dto.EmpDto;
 import com.qfedu.util.PageBean;
 
 /**
@@ -9,7 +9,7 @@ import com.qfedu.util.PageBean;
  * @author 骆昊
  *
  */
-public interface EmpDao {
+public interface EmpDao extends BaseDao<Emp, Integer> {
 
 	/**
 	 * 根据部门编号查找该部门所有员工
@@ -18,33 +18,5 @@ public interface EmpDao {
 	 * @param size 页面大小
 	 * @return 分页器对象
 	 */
-	PageBean<EmpDto> findEmpsByDeptNo(Integer no, int page, int size);
-	
-	/**
-	 * 保存员工
-	 * @param emp 员工对象
-	 * @return 保存成功返回true否则返回false
-	 */
-	boolean save(Emp emp);
-	
-	/**
-	 * 删除员工
-	 * @param no 员工编号
-	 * @return 删除成功返回true否则返回false
-	 */
-	boolean deleteByNo(Integer no);
-	
-	/**
-	 * 更新员工
-	 * @param emp 员工对象
-	 * @return 更新成功返回true否则返回false
-	 */
-	boolean update(Emp emp);
-	
-	/**
-	 * 根据员工编号查找员工
-	 * @param no 员工编号
-	 * @return 员工对象或null
-	 */
-	Emp findByNo(Integer no);
+	PageBean<Emp> findEmpsByDept(Dept dept, int page, int size);
 }

@@ -22,15 +22,12 @@ public class DeptServiceImpl implements DeptService {
 
 	@Override
 	public boolean removeDeptByNo(Integer no) {
-		if (deptDao.countEmpByNo(no) == 0) {
-			return deptDao.deleteByNo(no);
-		}
-		return false;
+		return deptDao.deleteById(no);
 	}
 
 	@Override
 	public boolean addNewDept(Dept dept) {
-		return deptDao.save(dept);
+		return deptDao.save(dept) != null;
 	}
 
 	@Override

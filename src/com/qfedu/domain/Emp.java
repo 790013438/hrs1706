@@ -3,22 +3,46 @@ package com.qfedu.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * 员工类
  * @author 骆昊
  *
  */
+@Entity
+@Table(name = "tb_emp")
 public class Emp implements Serializable {
+	@Id
+	@Column(name = "eno")
 	private Integer no;				// 编号
+	@Column(name = "ename")
 	private String name;		// 姓名
+	@Column(name = "esex")
 	private Boolean sex;			// 性别
+	@Column(name = "ejob")
 	private String job;				// 职位
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "emgr")
 	private Emp mgr;				// 主管
+	@Column(name = "esal")
 	private Double salary;		// 月薪
+	@Column(name = "ehiredate")
 	private Date hireDate;		// 入职日期
+	@Column(name = "estatus")
 	private Boolean status;	// 是否在职
+	@Column(name = "ephoto")
 	private String photo;		// 照片(路径)
+	@Column(name = "etel")
 	private String tel;				// 电话号码
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "dno")
 	private Dept dept;				// 所在部门
 
 	public Integer getNo() {

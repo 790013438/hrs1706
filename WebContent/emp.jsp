@@ -21,6 +21,7 @@
 						<th>职位</th>
 						<th>状态</th>
 						<th>电话</th>
+						<th>部门名称</th>
 						<th>操作</th>
 					</tr>
 				</table>
@@ -71,8 +72,9 @@
 								.text(emp.name).attr("href", "empDetail?no=" + emp.no)))
 						.append($("<td>").text(emp.sex))
 						.append($("<td>").text(emp.job))
-						.append($("<td>").text(emp.status))
+						.append($("<td>").text(emp.status))				
 						.append($("<td>").text(emp.tel))
+						.append($("<td>").text(emp.deptName))
 						.append($("<td>")
 								.append($("<a>").text("编辑").attr("href", "editEmp?no=" + emp.no))
 								.append("&nbsp;&nbsp;")

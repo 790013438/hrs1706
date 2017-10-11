@@ -38,7 +38,7 @@
 			<input type="hidden" name="dno" value="${param.dno}">
 			<input type="submit" value="确定">
 		</form>
-		<a href="dept">返回部门列表</a>
+		<a href="emp.jsp">返回员工列表</a>
 		<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 		<script>
 			$(function() {
